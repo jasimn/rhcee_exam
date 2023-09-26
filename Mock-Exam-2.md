@@ -1,5 +1,14 @@
-# Mock-2 RHCSA
-Q5.Write a script named home.sh and save it in the /home/bob/ directory. The script should create a tar archive named homedir.tar containing the full contents of /home/bob/ and all subdirectories. Use absolute paths. The script should create homedir.tar in the /opt/ directory. Make your script executable and run it.
+Q1. One of the files in the directory /opt/assets/ contains text, and the others are empty. Locate the file that contains text, and write its full file path in the file /home/bob/magicfile.txt.
 
-ans.
-tar cf  /opt/homedir.tar /home/bob
+answer:
+grep -r [A-Z,a-z] /opt/assets/ > /home/bob/magicfile.txt
+
+           or
+
+Q2. Find /opt/assets/ -type f -exec grep -l . {} \; > /home/bob/magicfile.txt
+ 
+Create a soft link to the file you found in the previous question. The soft link should be located at /home/bob/magiclink.
+
+answer:
+
+ln -s /opt/assets/asset150 /home/bob/magiclink
