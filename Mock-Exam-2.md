@@ -208,7 +208,127 @@ answer:
 
 Q15.Using yum uninstall nginx and all of its dependencies.
 
-anser
+answer:
+
+To uninstall nginx with all its dependencies using yum, use below command:
+
+
+sudo yum -y autoremove nginx
+
+Q16.Edit the correct file so that the hostname would be changed to tuxhost on the next reboot.
+
+
+Note: Do not reboot the machine!
+
+answer:
+
+Using an editor like vi edit the file /etc/hostname and change the entry to tuxhost then save the file:
+
+
+sudo vi /etc/hostname
+
+
+
+Change centos-host to tuxhost, save and exit the file.
+
+
+Note: Do not reboot the machine.
+
+Q17.Identify the default gateway for eth0 interface and save its value (IP address only) in /home/bob/gateway.txt file.
+
+answer:
+
+ip route
+
+Look for default via for eth0 and copy the IP address. Now save the same in /home/bob/gateway.txt file.
+
+Q18.Delete the gateway of 10.0.0.101 for eth1 interface.
+
+
+answer:
+
+sudo ip route del 10.0.0.101
+
+Q19.Using the correct command, determine which groups the user bob belongs to, and redirect the output to /home/bob/groups.txt
+
+answer:
+
+groups > /home/bob/groups.txt
+
+Q20.Add a new user steve. The default shell for steve should be set to /bin/csh when the account is created.
+
+answer:
+
+sudo useradd --shell /bin/csh steve
+
+Q21.Remove the user linda along with their home directory.
+
+answer:
+
+sudo userdel -r linda
+
+Q22.Which GRUB command line option would we add at boot time to force the system to perform an autorelabel action for SELinux?
+
+Write the answer in the file /home/bob/grubcommand.txt
+
+answer:
+
+Using an editor like vi write the below line in /home/bob/grubcommand.txt file:
+
+
+autorelabel=1
+
+Q23.Which command would you use to restore the default SELinux file contexts to all files in the hypothetical directory /home/bob/context?
+
+Write your answer in the file /home/bob/restore.txt.
+
+answer:
+
+restorecon -R /home/bob/context/
+or 
+restorecon -r /home/bob/context/
+
+Q24.Create the appropriate directory and any necessary parent directories to store rootless systemd service files for the user bob.
+ 
+answer:
+
+Using below command create the appropriate directory to store rootless systemd service files for the user bob :
+
+
+mkdir -p ~/.config/systemd/user/
+
+Q25.Use podman to pull version 1.20.2 of the nginx image from docker.io.
+
+
+answer:
+
+podman pull docker.io/nginx:1.20.2
+
+Q26.Use podman to determine the image id of the nginx image you pulled in the previous exercise.
+
+Write that image id to the file at /home/bob/imageid.txt.
+
+
+answer:
+
+Determine the image id of the nginx image with below command:
+
+
+podman images
+
+
+Using an editor such as vi, edit the file /home/bob/imageid.txt and save the image id for nginx:1.20.2 in it:
+
+
+Example: 0584b370e957
+
+complete! thanks!
+
+
+
+
+
+
 
 
 
