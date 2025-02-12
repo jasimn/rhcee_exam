@@ -1,0 +1,135 @@
+Step 1: Install Apache
+If Apache is not already installed, install it using the following command:
+
+bash
+Copy
+sudo apt update
+sudo apt install apache2
+Step 2: Create Directory Structure for Each Website
+For each website, create a directory to store its files. For example:
+
+bash
+Copy
+sudo mkdir -p /var/www/example1.com/public_html
+sudo mkdir -p /var/www/example2.com/public_html
+Set the correct permissions for these directories:
+
+bash
+Copy
+sudo chown -R $USER:$USER /var/www/example1.com/public_html
+sudo chown -R $USER:$USER /var/www/example2.com/public_html
+sudo chmod -R 755 /var/www
+Step 3: Create Sample HTML Files
+Create a sample index.html file for each website to test the configuration.
+
+For example1.com:
+
+bash
+Copy
+echo "<h1>Welcome to Example1.com!</h1>" | sudo tee /var/www/example1.com/public_html/index.html
+For example2.com:
+
+bash
+Copy
+echo "<h1>Welcome to Example2.com!</h1>" | sudo tee /var/www/example2.com/public_html/index.html
+Step 4: Create Virtual Host Configuration Files
+Create a configuration file for each virtual host in the /etc/apache2/sites-available/ directory.
+
+For example1.com:
+
+bash
+Copy
+sudo nano /etc/apache2/sites-available/example1.com.conf
+Add the following content:
+
+apache
+Copy
+<VirtualHost *:80>
+    ServerAdmin admin@example1.com
+    ServerName example1.com
+    ServerAlias www.example1.com
+    DocumentRoot /var/www/example1.com/public_html
+
+    <Directory /var/www/example1.com/public_html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error_example1.log
+    CustomLog ${APACHE_LOG_DIR}/access_example1.log combined
+</VirtualHost>
+For example2.com:
+
+bash
+Copy
+sudo nano /etc/apache2/sites-available/example2.com.conf
+Add the following content:
+
+apache
+Copy
+<VirtualHost *:80>
+    ServerAdmin admin@example2.com
+    ServerName example2.com
+    ServerAlias www.example2.com
+    DocumentRoot /var/www/example2.com/public_html
+
+    <Directory /var/www/example2.com/public_html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error_example2.log
+    CustomLog ${APACHE_LOG_DIR}/access_example2.log combined
+</VirtualHost>
+Step 5: Enable the Virtual Hosts
+Enable the virtual host configurations using the a2ensite command:
+
+bash
+Copy
+sudo a2ensite example1.com.conf
+sudo a2ensite example2.com.conf
+Disable the default virtual host if it is not needed:
+
+bash
+Copy
+sudo a2dissite 000-default.conf
+Step 6: Update Local Hosts File (For Testing)
+If you are testing locally, update the /etc/hosts file to map the domain names to your server's IP address:
+
+bash
+Copy
+sudo nano /etc/hosts
+Add the following lines:
+
+Copy
+127.0.0.1   example1.com
+127.0.0.1   example2.com
+Step 7: Restart Apache
+Restart Apache to apply the changes:
+
+bash
+Copy
+sudo systemctl restart apache2
+Step 8: Test the Configuration
+Open a web browser and navigate to http://example1.com and http://example2.com. You should see the respective sample pages you created earlier.
+
+Step 9: (Optional) Configure SSL for Virtual Hosts
+If you want to secure your websites with HTTPS, you can use Let's Encrypt to obtain SSL certificates. Install Certbot and configure SSL for each virtual host:
+
+bash
+Copy
+sudo apt install certbot python3-certbot-apache
+sudo certbot --apache -d example1.com -d www.example1.com
+sudo certbot --apache -d example2.com -d www.example2.com
+Summary
+Virtual host configuration files are stored in /etc/apache2/sites-available/.
+
+Use a2ensite to enable and a2dissite to disable virtual hosts.
+
+Restart Apache after making changes.
+
+Test your configuration using a browser or tools like curl.
+
+By following these steps, you can successfully configure and manage multiple virtual hosts on an Apache web server in Linux.
